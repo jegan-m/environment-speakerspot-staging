@@ -1,0 +1,153 @@
+Step: build-step-credential-initializer:
+
+{"level":"warn","ts":1551265882.6744251,"logger":"fallback-logger","caller":"logging/config.go:65","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/test\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1551265882.6746736,"logger":"fallback-logger","caller":"creds-init/main.go:40","msg":"Credentials initialized."}
+Step: build-step-git-source-0:
+
+{"level":"warn","ts":1551265883.9582014,"logger":"fallback-logger","caller":"logging/config.go:65","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/test\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1551265885.2696881,"logger":"fallback-logger","caller":"git-init/main.go:92","msg":"Successfully cloned \"https://github.com/jegan-m/jenkins-x-eks.git\" @ \"7615b60c750d5b6c3a4e909cdb547b0ea4835aeb\" in path \"/workspace\""}
+Step: build-step-jenkins:
+
+Picked up _JAVA_OPTIONS: -Xmx400m
+Started
+Running in Durability level: PERFORMANCE_OPTIMIZED
+  12.574 [id=28]	WARNING	i.f.k.c.i.VersionUsageUtils#alert: The client is using resource type 'customresourcedefinitions' with unstable version 'v1beta1'
+[Pipeline] node
+Running on Jenkins in /tmp/jenkinsTests.tmp/jenkins1688320274183025602test/workspace/job
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withCredentials
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (CI Build and push snapshot)
+Stage "CI Build and push snapshot" skipped due to when conditional
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Release)
+[Pipeline] dir
+Running in /home/jenkins/go/src/github.com/jegan-m/jenkins-x-eks
+[Pipeline] {
+[Pipeline] git
+Cloning the remote Git repository
+Cloning repository https://github.com/jegan-m/jenkins-x-eks.git
+ > git init /home/jenkins/go/src/github.com/jegan-m/jenkins-x-eks # timeout=10
+Fetching upstream changes from https://github.com/jegan-m/jenkins-x-eks.git
+ > git --version # timeout=10
+ > git fetch --tags --progress https://github.com/jegan-m/jenkins-x-eks.git +refs/heads/*:refs/remotes/origin/*
+ > git config remote.origin.url https://github.com/jegan-m/jenkins-x-eks.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/jegan-m/jenkins-x-eks.git # timeout=10
+Fetching upstream changes from https://github.com/jegan-m/jenkins-x-eks.git
+ > git fetch --tags --progress https://github.com/jegan-m/jenkins-x-eks.git +refs/heads/*:refs/remotes/origin/*
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+ > git rev-parse refs/remotes/origin/origin/master^{commit} # timeout=10
+Checking out Revision 7615b60c750d5b6c3a4e909cdb547b0ea4835aeb (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 7615b60c750d5b6c3a4e909cdb547b0ea4835aeb
+ > git branch -a -v --no-abbrev # timeout=10
+ > git checkout -b master 7615b60c750d5b6c3a4e909cdb547b0ea4835aeb
+Commit message: "Merge pull request #1 from jegan-m/mouse"
+First time build. Skipping changelog.
+[Pipeline] sh
++ jx-release-version
++ echo 0.0.2
+[Pipeline] sh
++ cat VERSION
++ jx step tag --version 0.0.2
+Tag v0.0.2 created and pushed to remote origin
+[Pipeline] sh
++ make build
+CGO_ENABLED=0 GO15VENDOREXPERIMENT=1 go build -ldflags '' -o bin/jenkins-x-eks main.go
+[Pipeline] sh
++ cat VERSION
++ export VERSION=0.0.2
++ skaffold build -f skaffold.yaml
+time="2019-02-27T11:12:04Z" level=warning msg="config version (skaffold/v1beta2) out of date: upgrading to latest (skaffold/v1beta3)"
+Starting build...
+Building [changeme]...
+Sending build context to Docker daemon  525.8kBSending build context to Docker daemon  6.502MB
+Step 1/4 : FROM scratch
+ ---> 
+Step 2/4 : EXPOSE 8080
+ ---> Using cache
+ ---> 5df68959f9b6
+Step 3/4 : ENTRYPOINT /jenkins-x-eks
+ ---> Using cache
+ ---> e1023d90e784
+Step 4/4 : COPY ./bin/ /
+ ---> Using cache
+ ---> 8c638d89ff19
+Successfully built 8c638d89ff19
+Successfully tagged 926bea070136d837c29e1f430f8efcb3:latest
+The push refers to a repository [335153367672.dkr.ecr.ap-southeast-2.amazonaws.com/jegan-m/jenkins-x-eks]
+b3431531f389: Preparing
+b3431531f389: Layer already exists
+0.0.2: digest: sha256:6a2e75e1ff0910f10160bfe40692d3e744a3d54870ebfba8eb9c95d70cbc05b4 size: 528
+Build complete in 607.430224ms
+Starting test...
+Test complete in 3.613µs
+changeme -> 335153367672.dkr.ecr.ap-southeast-2.amazonaws.com/jegan-m/jenkins-x-eks:0.0.2
+[Pipeline] sh
++ cat VERSION
++ jx step post build --image 335153367672.dkr.ecr.ap-southeast-2.amazonaws.com/jegan-m/jenkins-x-eks:0.0.2
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Promote to Environments)
+[Pipeline] dir
+Running in /home/jenkins/go/src/github.com/jegan-m/jenkins-x-eks/charts/jenkins-x-eks
+[Pipeline] {
+[Pipeline] sh
++ cat ../../VERSION
++ jx step changelog --version v0.0.2
+Using batch mode as inside a pipeline
+Generating change log from git ref 7615b60c750d5b6c3a4e909cdb547b0ea4835aeb => 35e417ab96294317ad6e606e04e5de6a05c3e985
+Failed to enrich commits with issues: User.jenkins.io "" is invalid: metadata.name: Required value: name or generateName is required
+Failed to enrich commits with issues: User.jenkins.io "" is invalid: metadata.name: Required value: name or generateName is required
+Finding issues in commit messages using git format
+No release found for jegan-m/jenkins-x-eks and tag v0.0.2 so creating a new release
+Updated the release information at https://github.com/jegan-m/jenkins-x-eks/releases/tag/v0.0.2
+generated: /home/jenkins/go/src/github.com/jegan-m/jenkins-x-eks/charts/jenkins-x-eks/templates/release.yaml
+Created Release jenkins-x-eks-0-0-2 resource in namespace jx
+Updating PipelineActivity jegan-m-jenkins-x-eks-master-2 with version 0.0.2
+Updated PipelineActivities jegan-m-jenkins-x-eks-master-2 with release notes URL: https://github.com/jegan-m/jenkins-x-eks/releases/tag/v0.0.2
+[Pipeline] sh
++ jx step helm release
+No $CHART_REPOSITORY defined so using the default value of: http://jenkins-x-chartmuseum:8080
+Adding missing Helm repo: jenkins-x http://chartmuseum.jenkins-x.io
+Successfully added Helm repository jenkins-x.
+Adding missing Helm repo: releases http://jenkins-x-chartmuseum:8080
+Successfully added Helm repository releases.
+No $CHART_REPOSITORY defined so using the default value of: http://jenkins-x-chartmuseum:8080
+Uploading chart file jenkins-x-eks-0.0.2.tgz to http://jenkins-x-chartmuseum:8080/api/charts
+Received 201 response: {"saved":true}
+[Pipeline] sh
++ cat ../../VERSION
++ jx promote -b --all-auto --timeout 1h --version 0.0.2
+prow based install so skip waiting for the merge of Pull Requests to go green as currently there is an issue with gettingstatuses from the PR, see https://github.com/jenkins-x/jx/issues/2410
+Promoting app jenkins-x-eks version 0.0.2 to namespace jx-staging
+Created Pull Request: https://github.com/jegan-m/environment-speakerspot-staging/pull/2
+
+Pull Request https://github.com/jegan-m/environment-speakerspot-staging/pull/2 is merged at sha d1dfa4d38a08e02acfb651492ad1cfa6865438fb
+Pull Request merged but we are not waiting for the update pipeline to complete!
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
